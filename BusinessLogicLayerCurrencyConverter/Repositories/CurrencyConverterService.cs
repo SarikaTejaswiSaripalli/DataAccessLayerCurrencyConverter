@@ -52,20 +52,21 @@ namespace BusinessLogicLayerCurrencyConverter.Repositories
             }
 
         }
-        public ExchangeRate PostInformation(ExchangeRate exchangeRate)
+        public async Task<ExchangeRate> PostInformation(ExchangeRate exchangeRate)
         {
             var transaction = _currencyDbContext.Database.BeginTransaction();
             try
-            {
+             {
                 _logger.LogInformation("logs are added for GetConvertAmount Method");
+
                 var exchangeRates = new ExchangeRate
                 {
                     FromCurrencyCode = exchangeRate.FromCurrencyCode,
                     ToCurrencyCode = exchangeRate.ToCurrencyCode,
                     Rate = exchangeRate.Rate
                 };
-                _currencyDbContext.ExchangeRates.Add(exchangeRates);
-                _currencyDbContext.SaveChanges();
+              await _currencyDbContext.ExchangeRates.AddAsync(exchangeRates);
+                 _currencyDbContext.SaveChanges();
                 return exchangeRate;
             }
             catch (Exception ex)
@@ -76,7 +77,8 @@ namespace BusinessLogicLayerCurrencyConverter.Repositories
                 throw new InformationNotAvailableException(ex.Message);
 
             }
-            finally { transaction.Dispose(); }
+            finally {
+                transaction.Dispose(); }
 
         }
         public List<ExchangeRate> GetAll()
@@ -84,18 +86,20 @@ namespace BusinessLogicLayerCurrencyConverter.Repositories
            return _currencyDbContext.ExchangeRates.ToList();
            
         }
-        public void UpdateCurrencyRate(ExchangeRate exchangeRate)
+        public ExchangeRate UpdateCurrencyRate(ExchangeRate exchangeRate)
         {
-            //var transaction = _currencyDbContext.Database.BeginTransaction();
+           //var transaction = _currencyDbContext.Database.BeginTransaction();
             try
             {
-                _currencyDbContext.Entry(exchangeRate).State = EntityState.Modified;
+                _currencyDbContext.ExchangeRates.Update(exchangeRate);
                 _currencyDbContext.SaveChanges();
+                return exchangeRate;
             }
             catch (Exception)
             {
-                //transaction.Rollback();
+
                 //transaction.Commit();
+                //transaction.Rollback();
                 throw new InformationNotAvailableException("currency rate is not updated");
             }
             finally

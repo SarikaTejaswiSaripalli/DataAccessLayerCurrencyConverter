@@ -7,8 +7,10 @@ namespace BusinessLogicLayerCurrencyConverter.Repositories.IRepositories
     public interface ICurrencyConverterService
     {
         object GetConvertAmount(CurrencyDetails currencyetails);
-        ExchangeRate PostInformation(ExchangeRate exchangeRate);
+       Task< ExchangeRate> PostInformation(ExchangeRate exchangeRate);
         List<ExchangeRate> GetAll();
-        void UpdateCurrencyRate(ExchangeRate exchangeRate);
+        ExchangeRate UpdateCurrencyRate(ExchangeRate exchangeRate);
+
+
     }
 }

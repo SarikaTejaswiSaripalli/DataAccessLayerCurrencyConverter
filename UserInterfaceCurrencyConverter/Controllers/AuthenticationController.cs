@@ -1,6 +1,5 @@
 ﻿using BusinessLogicLayerCurrencyConverter.AuthenticationRepositories.IAuthenticationRepository;
 using DataAccessLayerCurrencyConverter.AuthenticationModels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace UserInterfaceCurrencyConverter.Controllers

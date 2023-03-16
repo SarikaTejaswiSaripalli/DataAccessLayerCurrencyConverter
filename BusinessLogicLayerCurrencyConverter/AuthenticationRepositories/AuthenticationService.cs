@@ -59,6 +59,7 @@ namespace BusinessLogicLayerCurrencyConverter.AuthenticationRepositories
                     case "User":
                         await _userManager.AddToRoleAsync(user, UserRoles.User);
                         break;
+                   
                     
                     default:
                         await _userManager.AddToRoleAsync(user, UserRoles.User);
